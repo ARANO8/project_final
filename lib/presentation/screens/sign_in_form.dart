@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_final/presentation/screens/home_screen.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
@@ -70,8 +72,16 @@ class _SignInFormState extends State<SignInForm> {
             child: Center(
               child: ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/home', (route) => true);
+                  var userCredentialFinal;
+                  var firebaseAuth;
+                  var googleSignIn;
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(
+                      userCredentialFinal: userCredentialFinal,
+                      auth: firebaseAuth,
+                      googleSignIn: googleSignIn,
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 196, 233, 226),

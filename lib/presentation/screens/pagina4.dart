@@ -1,12 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class Page4 extends StatelessWidget {
-  const Page4({Key? key}) : super(key: key);
+  final User? user;
+  const Page4({this.user, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 196, 233, 226),
+      backgroundColor: const Color.fromARGB(255, 196, 233, 226),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -15,21 +18,20 @@ class Page4 extends StatelessWidget {
             const SizedBox(
               height: 50,
             ),
-            const Center(
+            Center(
               child: CircleAvatar(
                 radius: 70,
-                backgroundImage: AssetImage(
-                  'assets/perfil.jpg',
-                ),
+                backgroundImage: NetworkImage(user?.photoURL ??
+                    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepng.es%2Fpng-vr8vx7%2F&psig=AOvVaw1QC7hBGiY2cp73Hl5ul31P&ust=1687838044872000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCLiA-uqE4P8CFQAAAAAdAAAAABAE'),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
-            const Center(
+            Center(
               child: Text(
-                'Historial de Partidas',
-                style: TextStyle(
+                user?.displayName ?? 'No name',
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Poppins',
@@ -37,16 +39,44 @@ class Page4 extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              'Historial de partidas',
+              style: TextStyle(
+                fontSize: 25,
+                fontFamily: 'Poppins',
+                color: Colors.black,
+              ),
+            ),
+            Divider(
+              color: Colors.black.withOpacity(1.0),
+            ),
             Expanded(
               child: ListView.builder(
-                itemCount: 10,
+                physics: const BouncingScrollPhysics(),
+                itemCount: 5,
                 itemBuilder: (context, index) {
-                  //Expanded(child: Divider());
-                  return const Text(
-                    'Volver',
+                  return ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.white,
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'Partida 1',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                   );
                 },
               ),
+            ),
+            SizedBox(
+              height: 90,
             )
           ],
         ),

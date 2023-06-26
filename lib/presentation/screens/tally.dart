@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_final/presentation/screens/home_screen.dart';
 
 // ignore: must_be_immutable
 class Tally extends StatefulWidget {
@@ -86,8 +87,16 @@ class _TallyState extends State<Tally> {
                               backgroundColor:
                                   const Color.fromARGB(255, 196, 233, 226),
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
+                                var userCredentialFinal;
+                                var firebaseAuth;
+                                var googleSignIn;
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(
+                                    userCredentialFinal: userCredentialFinal,
+                                    auth: firebaseAuth,
+                                    googleSignIn: googleSignIn,
+                                  ),
+                                );
                               },
                               label: const Text(
                                 'Volver',

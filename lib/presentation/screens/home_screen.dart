@@ -1,7 +1,8 @@
 import 'dart:developer';
-//import 'dart:html';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_final/presentation/screens/pagina1.dart';
 import 'package:project_final/presentation/screens/pagina2.dart';
 import 'package:project_final/presentation/screens/pagina4.dart';
@@ -10,8 +11,17 @@ import 'package:project_final/presentation/screens/pagina5.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 //import 'package:project_final/presentation/screens/Tournament_screen.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final UserCredential? userCredentialFinal;
+  final FirebaseAuth auth;
+  final GoogleSignIn? googleSignIn;
+  const HomeScreen({
+    required this.userCredentialFinal,
+    super.key,
+    required this.googleSignIn,
+    required this.auth,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,7 +30,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _pageController = PageController(initialPage: 0);
   final _controller = NotchBottomBarController(index: 0);
-
   int maxCount = 5;
 
   @override
@@ -29,16 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  /// widget list
-  final List<Widget> bottomBarPages = [
-    const Page1(),
-    Page2(),
-    //const Page3(),
-    const Page4(),
-    const Page5(),
-  ];
   @override
   Widget build(BuildContext context) {
+    final List<Widget> bottomBarPages = [
+      const Page1(),
+      Page2(),
+      Page4(user: widget.userCredentialFinal?.user),
+      Page5(
+          user: widget.userCredentialFinal?.user,
+          auth: widget.auth,
+          googleSignIn: widget.googleSignIn!),
+    ];
     return Scaffold(
         body: PageView(
           controller: _pageController,

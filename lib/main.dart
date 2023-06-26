@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project_final/presentation/screens/home_screen.dart';
-import 'package:project_final/presentation/screens/tally.dart';
 import 'package:project_final/presentation/screens/welcome_screen.dart';
 
 void main() async {
@@ -20,8 +18,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/welcome',
       routes: {
         '/welcome': (context) => const WelcomeScreen(),
-        '/home': (context) => const HomeScreen(),
-        '/tally': (context) => Tally('', ''),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

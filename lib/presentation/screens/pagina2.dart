@@ -13,6 +13,7 @@ class Page2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -39,6 +40,7 @@ class Page2 extends StatelessWidget {
               height: 50,
             ),
             Form(
+              key: _formKey,
               child: Column(
                 children: [
                   const Text(
@@ -61,24 +63,7 @@ class Page2 extends StatelessWidget {
                     child: SizedBox(
                       width: 300,
                       height: 84,
-                      child: TextField(
-                        controller: team1controller,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Ingrese el nombre del primer equipo',
-                          hintStyle: TextStyle(
-                            color: Color(0xFFD2D2D2),
-                            fontSize: 14,
-                          ),
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Icon(Icons.looks_one_outlined),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 12),
-                        ),
-                        style: const TextStyle(fontSize: 16),
-                      ),
+                      child: _primerEquipo(team1controller),
                     ),
                   ),
                   const SizedBox(
@@ -116,25 +101,7 @@ class Page2 extends StatelessWidget {
                     child: SizedBox(
                       width: 300,
                       height: 84,
-                      child: TextField(
-                        controller: team2controller,
-                        decoration: const InputDecoration(
-                          //labelText: 'first team',
-                          border: OutlineInputBorder(),
-                          hintText: 'Ingrese el nombre del segundo equipo',
-                          hintStyle: TextStyle(
-                            color: Color(0xFFD2D2D2),
-                            fontSize: 14,
-                          ),
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            child: Icon(Icons.looks_two_outlined),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 18, horizontal: 12),
-                        ),
-                        style: const TextStyle(fontSize: 16),
-                      ),
+                      child: _segundoEquipo(team2controller),
                     ),
                   ),
                 ],
@@ -148,14 +115,16 @@ class Page2 extends StatelessWidget {
                 onPressed: () {
                   team1name = team1controller.text;
                   team2name = team2controller.text;
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return Tally(team1name, team2name);
-                      },
-                    ),
-                    (route) => false,
-                  );
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return Tally(team1name, team2name);
+                        },
+                      ),
+                      (route) => false,
+                    );
+                  }
                 },
                 backgroundColor: const Color.fromARGB(255, 196, 233, 226),
                 label: const Text(
@@ -172,6 +141,57 @@ class Page2 extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  TextFormField _segundoEquipo(TextEditingController team2controller) {
+    return TextFormField(
+      controller: team2controller,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Este campo es obligatorio';
+        }
+      },
+      decoration: const InputDecoration(
+        //labelText: 'first team',
+        border: OutlineInputBorder(),
+        hintText: 'Ingrese el nombre del segundo equipo',
+        hintStyle: TextStyle(
+          color: Color(0xFFD2D2D2),
+          fontSize: 14,
+        ),
+        prefixIcon: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Icon(Icons.looks_two_outlined),
+        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+      ),
+      style: const TextStyle(fontSize: 16),
+    );
+  }
+
+  TextFormField _primerEquipo(TextEditingController team1controller) {
+    return TextFormField(
+      controller: team1controller,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Este campo es obligatorio';
+        }
+      },
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: 'Ingrese el nombre del primer equipo',
+        hintStyle: TextStyle(
+          color: Color(0xFFD2D2D2),
+          fontSize: 14,
+        ),
+        prefixIcon: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Icon(Icons.looks_one_outlined),
+        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+      ),
+      style: const TextStyle(fontSize: 16),
     );
   }
 }

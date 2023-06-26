@@ -33,7 +33,7 @@ class Page1 extends StatelessWidget {
               height: 50,
             ),
             Center(
-              child: FloatingActionButton.large(
+              child: FloatingActionButton.small(
                 onPressed: () {
                   showGeneralDialog(
                     barrierDismissible: true,
